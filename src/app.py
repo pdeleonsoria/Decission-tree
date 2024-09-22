@@ -125,8 +125,21 @@ grid_search.fit(X_train, y_train)
 
 print("Mejores parámetros:", grid_search.best_params_)
 
+#COMPROBAR PARÁMETROS OPTIMIZADOS 
+
 arbol_opti= DecisionTreeClassifier(criterion = "entropy", max_depth = 5, min_samples_leaf = 4, min_samples_split = 2, random_state = 42)
 arbol_opti.fit(X_train, y_train)
 
+y_pred_train_opti = arbol_opti.predict(X_train)
+y_pred_test_opti = arbol_opti.predict(X_test)
+
+y_pred_opti = arbol_opti.predict(X_test)
+metricas_df_opti = get_metrics(y_train, y_test, y_pred_train_opti, y_pred_test_opti)
+
+print(metricas_df_opti)
+
+#GUARDAR
+
+dump(arbol_opti, open("../models/tree_classifier_crit-entro_maxdepth-5_minleaf-4_minsplit2_42.sav", "wb"))
 
 
